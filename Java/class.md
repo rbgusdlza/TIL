@@ -29,3 +29,7 @@
 
 * 배열을 사용하면 특정 타입을 연속한 데이터 구조로 묶어서 편리하게 관리할 수 있다.
 * 배열 또한 객체와 마찬가지로, `new` 연산자를 이용해 생성한다.
+
+### Reference
+
+* 김영한의 실전 자바 - 기본편 : [https://www.inflearn.com/course/%EA%B9%80%EC%98%81%ED%95%9C%EC%9D%98-%EC%8B%A4%EC%A0%84-%EC%9E%90%EB%B0%94-%EA%B8%B0%EB%B3%B8%ED%8E%B8/dashboard]
