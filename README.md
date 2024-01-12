@@ -8,3 +8,4 @@
 * [constructor](https://github.com/rbgusdlza/TIL/blob/main/Java/constructor.md)
 * [package](https://github.com/rbgusdlza/TIL/blob/main/Java/package.md)
 * [accessModifier](https://github.com/rbgusdlza/TIL/blob/main/Java/accessModifier.md)
+* [memoryStructure](https://github.com/rbgusdlza/TIL/blob/main/Java/memoryStructure.md)
