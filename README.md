@@ -10,5 +10,4 @@
 * [accessModifier](https://github.com/rbgusdlza/TIL/blob/main/Java/accessModifier.md)
 * [memoryStructure](https://github.com/rbgusdlza/TIL/blob/main/Java/memoryStructure.md)
 * [final](https://github.com/rbgusdlza/TIL/blob/main/Java/final.md)
-* [inheritance](https://github.com/rbgusdlza/TIL/blob/main/Java/inheritance.md)
 * [polymorphism](https://github.com/rbgusdlza/TIL/blob/main/Java/polymorphism.md)
