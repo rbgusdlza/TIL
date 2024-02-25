@@ -1,6 +1,6 @@
 ## 스프링 컨테이너란?
 
-* 자바 객체의 생명 주기(life cycle)와 의존성 주입(Dependency Injection)을 담당하는 컨테이너이다.
+* 빈(bean)의 생명 주기(life cycle)와 의존성 주입(Dependency Injection)을 담당하는 컨테이너이다.
 * 스프링 컨테이너가 관리하는 자바 객체를 ``빈(bean)``이라고 한다. 
 
 ```
@@ -17,3 +17,10 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 ## 스프링 컨테이너의 생성 과정
 
 ### 1. 스프링 컨테이너 생성
+
+* 스프링 컨테이너를 생성할 때는 구성 정보를 지정해 주어야 한다.
+* 여기서는 ``AppConfig.class``를 구성 정보로 지정했다.
+
+### 2. 스프링 빈 등록
+
+* 스프링 컨테이너는 파라미터로 넘어온 설정 클래스 정보를 사용해서 스프링 빈을 등록한다.
