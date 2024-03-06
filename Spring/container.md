@@ -24,3 +24,7 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 ### 2. 스프링 빈 등록
 
 * 스프링 컨테이너는 파라미터로 넘어온 설정 클래스 정보를 사용해서 스프링 빈을 등록한다.
+
+### 3. 스프링 의존관계 설정
+
+* 스프링 컨테이너는 설정 정보를 참고해서 의존관계를 주입(DI)한다.
