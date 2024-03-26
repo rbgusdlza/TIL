@@ -18,8 +18,8 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 
 ### 1. 스프링 컨테이너 생성
 
-* 스프링 컨테이너를 생성할 때는 구성 정보를 지정해 주어야 한다.
-* 여기서는 ``AppConfig.class``를 구성 정보로 지정했다.
+* 스프링 컨테이너를 생성할 때는 **구성 정보**를 지정해 주어야 한다.
+* 여기서는 ``AppConfig.class`` 즉, 설정 클래스 정보를 구성 정보로 지정했다.
 
 ### 2. 스프링 빈 등록
 
@@ -27,4 +27,4 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 
 ### 3. 스프링 의존관계 설정
 
-* 스프링 컨테이너는 설정 정보를 참고해서 의존관계를 주입(DI)한다.
+* 스프링 컨테이너는 구성 정보를 참고해서 의존관계를 주입(DI)한다.
