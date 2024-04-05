@@ -28,3 +28,7 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 ### 3. 스프링 의존관계 설정
 
 * 스프링 컨테이너는 구성 정보를 참고해서 의존관계를 주입(DI)한다.
+
+<br>
+
+## 빈 이름 설정
