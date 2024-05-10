@@ -17,6 +17,8 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 
 ### 1. 스프링 컨테이너 생성
 
+<img src="./img/spring_basic_1.png">
+
 * 스프링 컨테이너를 생성할 때는 **구성 정보**를 지정해 주어야 한다.
 * 여기서는 ``AppConfig.class`` 즉, 설정 클래스 정보를 구성 정보로 지정했다.
 
