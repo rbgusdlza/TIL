@@ -33,3 +33,8 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 <br>
 
 ## 빈 이름 설정
+
+* 빈 이름은 기본적으로 메서드 이름을 사용한다.
+* 빈 이름을 직접 이용할 수도 있다.
+  * ``@Bean(name="memberService2")``
+* **빈 이름은 항상 다른 이름을 부여**해야 한다. 같은 이름을 부여하면, 다른 빈이 무시되거나, 기존 빈을 덮어버리거나 설정에 따라 오류가 발생한다.
