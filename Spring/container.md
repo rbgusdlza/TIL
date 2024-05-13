@@ -47,5 +47,12 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
  * 조회 대상 스프링 빈이 없으면 예외 발생
    * `NoSuchBeanDefinitionException: No bean named 'xxxxx' available`
 
+## 스프링 빈 조회 - 동일한 타입이 둘 이상
 
+* 타입으로 조회시 같은 타입의 스프링 빈이 둘 이상이면 오류가 발생한다. 이때, 빈 이름을 지정하면 된다.
+* `ac.getBeansOfType()`을 사용하면 해당 타입의 모든 빈을 조회할 수 있다.
 
+## 스프링 빈 조회 - 상속 관계
+
+* 부모 타입으로 조회하면, 자식 타입도 함께 조회한다.
+* 그래서 모든 자바 객체의 최고 부모인 `Object` 타입으로 조회하면, 모든 스프링 빈을 조회한다.
