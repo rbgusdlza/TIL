@@ -56,3 +56,17 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 
 * 부모 타입으로 조회하면, 자식 타입도 함께 조회한다.
 * 그래서 모든 자바 객체의 최고 부모인 `Object` 타입으로 조회하면, 모든 스프링 빈을 조회한다.
+
+<br>
+
+## BeanFactory와 ApplicationContext
+
+* **BeanFactory**
+  * 스프링 컨테이너의 최상위 인터페이스다.
+  * 스프링 빈을 관리하고 조회하는 역할을 담당한다.
+  * `getBean()` 을 제공한다.
+  * 지금까지 우리가 사용했던 대부분의 기능은 BeanFactory가 제공하는 기능이다.
+
+* **ApplicationContext**
+  * BeanFactory 기능을 모두 상속받아서 제공한다.
+  * 메시지소스를 활용한 국제화 기능, 환경변수, 애플리케이션 이벤트, 편리한 리소스 조회 등 수 많은 부가기능을 제공한다. 
