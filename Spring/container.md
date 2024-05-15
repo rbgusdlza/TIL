@@ -70,3 +70,19 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 * **ApplicationContext**
   * BeanFactory 기능을 모두 상속받아서 제공한다.
   * 메시지소스를 활용한 국제화 기능, 환경변수, 애플리케이션 이벤트, 편리한 리소스 조회 등 수 많은 부가기능을 제공한다. 
+
+<br>
+
+## 다양한 설정 형식 지원 - 자바 코드, XML
+
+* 스프링 컨테이너는 다양한 형식의 설정 정보를 받아들일 수 있게 유연하게 설계되어 있다.
+  * 자바 코드, XML, Groovy 등등
+
+### 애노테이션 기반 자바 코드 설정 사용
+
+* `new AnnotationConfigApplicationContext(AppConfig.class)`
+* `AnnotationConfigApplicationContext` 클래스를 사용하면서 자바 코드로 된 설정 정보를 넘기면 된다.
+
+### XML 설정 사용
+
+* `GenericXmlApplicationContext` 클래스를 사용하면서 `xml` 설정 파일을 넘기면 된다.
