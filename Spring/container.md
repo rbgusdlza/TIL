@@ -86,3 +86,16 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 ### XML 설정 사용
 
 * `GenericXmlApplicationContext` 클래스를 사용하면서 `xml` 설정 파일을 넘기면 된다.
+
+<br>
+
+## 스프링 빈 설정 메타 정보 - BeanDefinition
+
+* 스프링은 어떻게 이런 다양한 설정 형식을 지원하는 것일까? 그 중심에는 `BeanDefinition` 이라는 추상화가 있다.
+*  `BeanDefinition`은 설정 정보를 추상화하여 **역할과 구현을 개념적으로 나누는 것**에 도움을 준다.
+  *  XML을 읽어서 `BeanDefinition`을 만든다.
+  *  자바 코드를 읽어서 `BeanDefinition`을 만든다.
+  *  스프링 컨테이너는 자바 코드인지, XML인지 몰라도 된다. 오직 BeanDefinition만 알면 된다.
+* `BeanDefinition` 을 빈 설정 메타정보라 한다.
+  * `@Bean` , `<bean>` 당 각각 하나씩 메타 정보가 생성된다.
+* 스프링 컨테이너는 이 메타정보를 기반으로 스프링 빈을 생성한다.
