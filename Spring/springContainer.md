@@ -93,6 +93,8 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 
 ## 스프링 빈 설정 메타 정보 - BeanDefinition
 
+<img src="./img/spring_basic_3.png">
+
 * 스프링은 어떻게 이런 다양한 설정 형식을 지원하는 것일까? 그 중심에는 `BeanDefinition` 이라는 추상화가 있다.
 *  `BeanDefinition`은 설정 정보를 추상화하여 **역할과 구현을 개념적으로 나누는 것**에 도움을 준다.
    * XML을 읽어서 `BeanDefinition`을 만든다.
