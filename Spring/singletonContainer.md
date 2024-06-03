@@ -112,4 +112,6 @@ public class AppConfig {
 결과적으로 각각 다른 2개의 `MemoryMemberRepository` 가 생성되면서 싱글톤이 깨지는 것 처럼 보인다.
 스프링 컨테이너는 이 문제를 어떻게 해결할까?
 
+<br>
+
 ## @Configuration과 바이트코드 조작의 마법
