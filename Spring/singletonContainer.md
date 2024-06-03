@@ -77,3 +77,39 @@ public class SingletonService {
   * 특정 클라이언트가 값을 변경할 수 있는 필드가 있으면 안된다.
   * 가급적 읽기만 가능해야 한다.
   * 필드 대신에 자바에서 공유되지 않는 지역변수, 파라미터, ThreadLocal 등을 사용해야 한다.
+
+## @Configuration과 싱글톤
+
+그런데 이상한점이 있다. 다음 AppConfig 코드를 보자.
+
+```java
+@Configuration
+public class AppConfig {
+
+ @Bean
+ public MemberService memberService() {
+  return new MemberServiceImpl(memberRepository());
+ }
+ 
+ @Bean
+ public OrderService orderService() {
+  return new OrderServiceImpl(memberRepository(), discountPolicy());
+ }
+
+ @Bean
+ public MemberRepository memberRepository() {
+  return new MemoryMemberRepository();
+ }
+ ...
+}
+```
+
+* memberService 빈을 만드는 코드를 보면 `memberRepository()` 를 호출한다.
+  * 이 메서드를 호출하면 `new MemoryMemberRepository()` 를 호출한다.
+* orderService 빈을 만드는 코드도 동일하게 `memberRepository()` 를 호출한다.
+  * 이 메서드를 호출하면 `new MemoryMemberRepository()` 를 호출한다.
+
+결과적으로 각각 다른 2개의 `MemoryMemberRepository` 가 생성되면서 싱글톤이 깨지는 것 처럼 보인다.
+스프링 컨테이너는 이 문제를 어떻게 해결할까?
+
+## @Configuration과 바이트코드 조작의 마법
