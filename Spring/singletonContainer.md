@@ -136,10 +136,10 @@ public class AppConfig {
 
 ### `@Configuration` 을 적용하지 않고, `@Bean` 만 적용하면 어떻게 될까?
 
-`@Configuration`을 붙이면 바이트코드를 조작하는 CGLIB 기술을 사용해서 싱글톤을 보장하지만, 
-만약 @Bean만 적용하면 어떻게 될까?
+`@Configuration`을 붙이면 바이트코드를 조작하는 `CGLIB` 기술을 사용해서 싱글톤을 보장하지만, 
+만약 `@Bean`만 적용하면 어떻게 될까?
 
 <br>
 
-`@Configuration`를 적용하지 않으면 AppConfig가 CGLIB 기술 없이 순수한 AppConfig로 스프링 빈에 등록된다.
+`@Configuration`를 적용하지 않으면 `AppConfig`가 `CGLIB` 기술 없이 순수한 `AppConfig`로 스프링 빈에 등록된다.
 즉, 의존관계 주입이 필요해서 메서드를 직접 호출할 때 싱글톤을 보장하지 않는다.
