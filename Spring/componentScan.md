@@ -109,7 +109,9 @@ public @interface Configuration {
 * `includeFilters` : 컴포넌트 스캔 대상을 추가로 지정한다.
 * `excludeFilters` : 컴포넌트 스캔에서 제외할 대상을 지정한다.
 
-컴포넌트 스캔 대상에 추가할 애노테이션
+<br>
+
+**컴포넌트 스캔 대상에 추가할 애노테이션**
 
 ```java
 @Target(ElementType.TYPE)
@@ -119,7 +121,7 @@ public @interface MyIncludeComponent {
 }
 ```
 
-컴포넌트 스캔 대상에서 제외할 애노테이션
+**컴포넌트 스캔 대상에서 제외할 애노테이션**
 
 ```java
 @Target(ElementType.TYPE)
@@ -129,7 +131,7 @@ public @interface MyExcludeComponent {
 }
 ```
 
-컴포넌트 스캔 대상에 추가할 클래스
+**컴포넌트 스캔 대상에 추가할 클래스**
 
 ```java
 @MyIncludeComponent
@@ -137,7 +139,7 @@ public class BeanA {
 }
 ```
 
-컴포넌트 스캔 대상에서 제외할 클래스
+**컴포넌트 스캔 대상에서 제외할 클래스**
 
 ```java
 @MyExcludeComponent
