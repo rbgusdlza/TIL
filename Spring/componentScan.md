@@ -102,6 +102,8 @@ public @interface Configuration {
 * `@Configuration` : 앞서 보았듯이 스프링 설정 정보로 인식하고, 스프링 빈이 싱글톤을 유지하도록 추가 처리를 한다.
 * `@Service` : `@Service` 는 특별한 처리를 하지 않는다. 대신 개발자들이 핵심 비즈니스 로직이 여기에 있겠구나 라고 비즈니스 계층을 인식하는데 도움이 된다.
 
+<br>
+
 ## 필터
 
 * `includeFilters` : 컴포넌트 스캔 대상을 추가로 지정한다.
