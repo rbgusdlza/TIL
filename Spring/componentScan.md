@@ -158,3 +158,20 @@ public class BeanB {
 
 * `includeFilters` 에 `MyIncludeComponent` 애노테이션을 추가해서 BeanA가 스프링 빈에 등록된다.
 * `excludeFilters` 에 `MyExcludeComponent` 애노테이션을 추가해서 BeanB는 스프링 빈에 등록되지 않는다.
+
+<br>
+
+## FilterType 옵션
+
+FilterType은 2가지 주요 옵션이 있다.
+
+* `ANNOTATION`: 기본값, 애노테이션을 인식해서 동작한다.
+  * ex) `org.example.SomeAnnotation`
+* `ASSIGNABLE_TYPE`: 지정한 타입과 자식 타입을 인식해서 동작한다.
+  * ex) `org.example.SomeClass`
+
+참고: `@Component` 면 충분하기 때문에, `includeFilters` 를 사용할 일은 거의 없다. `excludeFilters` 는
+여러가지 이유로 간혹 사용할 때가 있지만 많지는 않다.
+특히 최근 스프링 부트는 컴포넌트 스캔을 기본으로 제공하는데, 개인적으로는 옵션을 변경하면서 사용하기 보다
+는 스프링의 기본 설정에 최대한 맞추어 사용하는 것을 권장하고, 선호하는 편이다.
+
