@@ -185,4 +185,4 @@ FilterType은 2가지 주요 옵션이 있다.
 2. 수동 빈 등록 vs 자동 빈 등록
 
 * 자동, 수동 모두 빈을 등록할 때, 그 이름이 같은 경우 스프링은 오류를 발생시킨다.
-  * `ConflictingBeanDefinitionException' 예외 발생
+  * `ConflictingBeanDefinitionException` 예외 발생
