@@ -42,9 +42,6 @@ public class MemberServiceImpl implements MemberService {
   * **선택, 변경** 가능성이 있는 의존관계에 사용
   * 자바빈 프로퍼티 규약의 수정자 메서드 방식을 사용하는 방법이다.
 
-참고: `@Autowired` 의 기본 동작은 주입할 대상이 없으면 오류가 발생한다. 
-주입할 대상이 없어도 동작하게 하려면 `@Autowired(required = false)` 로 지정하면 된다.
-
 ```java
 @Component
 public class MemberServiceImpl implements MemberService {
@@ -110,3 +107,54 @@ public class MemberServiceImpl implements MemberService {
 
 참고: 의존관계 자동 주입은 스프링 컨테이너가 관리하는 스프링 빈이어야 동작한다.
 스프링 빈이 아닌 클래스에서 `@Autowired` 코드를 적용해도 아무 기능도 동작하지 않는다.
+
+<br>
+
+## 옵션 처리
+
+주입할 스프링 빈이 없어도 동작해야 할 때가 있다.
+그런데 `@Autowired` 만 사용하면 `required` 옵션의 기본값이 `true` 로 되어 있어서 자동 주입 대상이 없으면 오류가 발생한다.
+
+```java
+@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Autowired {
+    boolean required() default true;
+}
+```
+
+자동 주입 대상을 옵션으로 처리하는 방법은 다음과 같다.
+
+* `@Autowired(required = false)` : 자동 주입할 대상이 없으면 수정자 메서드 자체가 호출이 안된다.
+* `org.springframework.lang.@Nullable` : 자동 주입할 대상이 없으면 null이 입력된다.
+* `Optional<>` : 자동 주입할 대상이 없으면 `Optional.empty` 가 입력된다.
+
+```java
+//호출 안됨
+@Autowired(required = false)
+public void setNoBean1(Member member) {
+ System.out.println("setNoBean1 = " + member);
+}
+
+//null 호출
+@Autowired
+public void setNoBean2(@Nullable Member member) {
+ System.out.println("setNoBean2 = " + member);
+}
+//Optional.empty 호출
+@Autowired(required = false)
+public void setNoBean3(Optional<Member> member) {
+ System.out.println("setNoBean3 = " + member);
+}
+```
+
+출력 결과
+
+```
+setNoBean2 = null
+setNoBean3 = Optional.empty
+```
+
+* 여기서 Member는 스프링 빈이 아니므로 세 가지 케이스에서 자동 주입이 발생하지 않는다.
+* `setNoBean1()` 은 `@Autowired(required=false)` 이므로 호출 자체가 안된다.
