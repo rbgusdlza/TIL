@@ -45,8 +45,8 @@ public class MemberServiceImpl implements MemberService {
 ```java
 @Component
 public class MemberServiceImpl implements MemberService {
- private final MemberRepository memberRepository;
- private final TeamRepository teamRepository;
+ private MemberRepository memberRepository;
+ private TeamRepository teamRepository;
 
  @Autowired
  public void setMemberRepository(MemberRepository memberRepository) {
@@ -158,3 +158,73 @@ setNoBean3 = Optional.empty
 
 * 여기서 Member는 스프링 빈이 아니므로 세 가지 케이스에서 자동 주입이 발생하지 않는다.
 * `setNoBean1()` 은 `@Autowired(required=false)` 이므로 호출 자체가 안된다.
+
+## 생성자 주입을 선택하자!
+
+생성자 주입을 선택하는 이유는 다음과 같다.
+
+1. **불변**
+
+* 대부분의 의존관계 주입은 한번 일어나면 애플리케이션 종료시점까지 의존관계를 변경할 일이 없다. 오히려 대부분의 의존관계는 애플리케이션 종료 전까지 변하면 안된다.(불변해야 한다.)
+* 수정자 주입을 사용하면, setXxx 메서드를 `public`으로 열어두어야 한다.
+* 누군가 실수로 변경할 수 도 있고, 변경하면 안되는 메서드를 열어두는 것은 좋은 설계 방법이 아니다.
+* 생성자 주입은 객체를 생성할 때 딱 1번만 호출되므로 이후에 호출되는 일이 없기 때문에 불변하게 설계할 수 있다.
+
+2. **누락**
+
+프레임워크 없이 순수한 자바 코드를 단위 테스트 하는 경우에 
+다음과 같이 수정자 의존관계인 경우,
+
+```java
+@Component
+public class MemberServiceImpl implements MemberService {
+ private MemberRepository memberRepository;
+ private TeamRepository teamRepository;
+
+ @Autowired
+ public void setMemberRepository(MemberRepository memberRepository) {
+  this.memberRepository = memberRepository;
+ }
+
+ @Autowired
+ public void setTeamRepository(TeamRepository teamRepository) {
+  this.teamRepository = teamRepository;
+ }
+}
+```
+
+* `@Autowired` 가 프레임워크 안에서 동작할 때는 의존관계가 없으면 오류가 발생하지만, 지금은 프레임워크 없이 순수한 자바 코드로만 단위 테스트를 수행하고 있다.
+
+```java
+@Test
+void createMember() {
+ MemberServiceImpl memberService = new MemberServiceImpl();
+ memberService.createMember("kim", "teamA");
+}
+```
+
+* 이렇게 테스트를 수행하면 실행은 되지만 실행 결과는 NPE(Null Point Exception)이 발생하는데, memberRepository, teamRepository 모두 의존관계 주입이 누락되었기 때문이다.
+* 생성자 주입을 사용하면 다음처럼 주입 데이터를 누락 했을 때 **컴파일 오류**가 발생한다. 그리고 IDE에서 바로 어떤 값을 필수로 주입해야 하는지 알 수 있다.
+
+3. **final 키워드**
+
+생성자 주입을 사용하면 필드에 `final` 키워드를 사용할 수 있다. 그래서 생성자에서 혹시라도 값이 설정되지 않는 오류를 컴파일 시점에 막아준다.
+
+```java
+@Component
+public class MemberServiceImpl implements MemberService {
+ private final MemberRepository memberRepository;
+ private final TeamRepository teamRepository;
+
+ @Autowired
+ public MemberServiceImpl(MemberRepository memberRepository, TeamRepository teamRepository) {
+  this.memberRepository = memberRepository;
+ }
+}
+```
+
+* 필수 필드인 `teamRepository` 에 값을 설정해야 하는데, 이 부분이 누락되었다. 자바는 컴파일 시점에 다음 오류를 발생시킨다.
+* `java: variable discountPolicy might not have been initialized`
+* **컴파일 오류는 세상에서 가장 빠르고, 좋은 오류다!**
+
+참고: 수정자 주입을 포함한 나머지 주입 방식은 모두 생성자 이후에 호출되므로, 필드에 `final` 키워드를 사용할 수 없다. 오직 생성자 주입 방식만 `final` 키워드를 사용할 수 있다.
