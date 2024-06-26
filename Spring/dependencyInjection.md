@@ -108,6 +108,9 @@ public class MemberServiceImpl implements MemberService {
 참고: 의존관계 자동 주입은 스프링 컨테이너가 관리하는 스프링 빈이어야 동작한다.
 스프링 빈이 아닌 클래스에서 `@Autowired` 코드를 적용해도 아무 기능도 동작하지 않는다.
 
+
+// 어떻게 @Autowired 애노테이션으로 빈 이름을 매칭할까? 
+
 <br>
 
 ## 옵션 처리
@@ -273,3 +276,33 @@ but found 2: fixDiscountPolicy,rateDiscountPolicy
 이때 하위 타입으로 지정할 수도 있지만, 하위 타입으로 지정하는 것은 DIP를 위배하고 유연성이 떨어진다. 
 그리고 이름만 다르고, 완전히 똑같은 타입의 스프링 빈이 2개 있을 때 해결이 안된다.
 스프링 빈을 수동 등록해서 문제를 해결해도 되지만, 의존 관계 자동 주입에서 해결하는 여러 방법이 있다.
+
+<br>
+
+## 해결 방법
+
+* 조회 대상 빈이 2개 이상일 때 해결 방법
+  * `@Autowired` 필드 명 매칭
+  * `@Qualifier` -> `@Qualifier` 끼리 매칭 빈 이름 매칭
+  * `@Primary` 사용
+
+### @Autowired 필드 명 매칭
+
+`@Autowired` 는 타입 매칭을 시도하고, 이때 여러 빈이 있으면 필드 이름, 파라미터 이름으로 빈 이름을 추가 매칭한다.
+
+기존 코드
+
+```java
+@Autowired
+private DiscountPolicy discountPolicy
+```
+
+필드 명을 빈 이름으로 변경
+
+```java
+@Autowired
+private DiscountPolicy rateDiscountPolicy
+```
+
+필드 명이 `rateDiscountPolicy` 이므로 정상 주입된다.
+**필드 명 매칭은 먼저 타입 매칭을 시도 하고 그 결과에 여러 빈이 있을 때 추가로 동작하는 기능이다.**
