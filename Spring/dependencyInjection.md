@@ -306,3 +306,68 @@ private DiscountPolicy rateDiscountPolicy
 
 필드 명이 `rateDiscountPolicy` 이므로 정상 주입된다.
 **필드 명 매칭은 먼저 타입 매칭을 시도 하고 그 결과에 여러 빈이 있을 때 추가로 동작하는 기능이다.**
+
+**@Autowired 매칭 정리**
+
+1. 타입 매칭
+2. 타입 매칭의 결과가 2개 이상일 때 필드 명, 파라미터 명으로 빈 이름 매칭
+
+<br>
+
+### @Qualifier 사용
+
+`@Qualifier` 는 추가 구분자를 붙여주는 방법이다. 주입시 추가적인 방법을 제공하는 것이지 빈 이름을 변경하는 것은 아니다.
+
+**빈 등록시 @Qualifier를 붙여 준다.**
+
+```java
+@Component
+@Qualifier("mainDiscountPolicy")
+public class RateDiscountPolicy implements DiscountPolicy {}
+```
+
+```java
+@Component
+@Qualifier("fixDiscountPolicy")
+public class FixDiscountPolicy implements DiscountPolicy {}
+```
+
+주입시에 `@Qualifier`를 붙여주고 등록한 이름을 적어준다.
+
+**생성자 자동 주입 예시**
+
+```java
+@Autowired
+public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+ this.memberRepository = memberRepository;
+ this.discountPolicy = discountPolicy;
+}
+```
+
+**수정자 자동 주입 예시**
+
+```java
+@Autowired
+public DiscountPolicy setDiscountPolicy(@Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+ this.discountPolicy = discountPolicy;
+}
+```
+
+`@Qualifier` 로 주입할 때 `@Qualifier("mainDiscountPolicy")` 를 못찾으면 어떻게 될까? 
+그러면 `mainDiscountPolicy`라는 이름의 스프링 빈을 추가로 찾는다. 하지만 `@Qualifier` 는 `@Qualifier` 를 찾는 용도로만 사용하는 것이 권장된다.
+
+다음과 같이 직접 빈 등록시에도 `@Qualifier`를 동일하게 사용할 수 있다.
+
+```java
+@Bean
+@Qualifier("mainDiscountPolicy")
+public DiscountPolicy discountPolicy() {
+ return new ...
+}
+```
+
+**@Qualifier 정리**
+
+1. `@Qualifier`끼리 매칭
+2. 빈 이름 매칭
+3. `NoSuchBeanDefinitionException` 예외 발생
