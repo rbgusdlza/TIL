@@ -420,3 +420,55 @@ public DiscountPolicy setDiscountPolicy(DiscountPolicy discountPolicy) {
 
 `@Primary`는 기본값처럼 동작하는 것이고, `@Qualifier` 는 매우 상세하게 동작한다. 이런 경우 어떤 것이 우선권을 가져갈까? 
 스프링은 자동보다는 수동이, 넒은 범위의 선택권 보다는 좁은 범위의 선택권이 우선 순위가 높다. 따라서 여기서도 `@Qualifier` 가 우선권이 높다.
+
+<br>
+
+## 조회한 빈이 모두 필요할 때 -> List, Map
+
+의도적으로 해당 타입의 스프링 빈이 다 필요한 경우도 있다.
+예를 들어, 할인 서비스를 제공하는데 클라이언트가 할인의 종류(rate, fix)를 선택할 수 있다고 가정해보자.
+스프링을 활용하면 소위 말하는 전략 패턴을 매우 간단하게 구현할 수 있다.
+
+```java
+public class AllBeanTest {
+ @Test
+ void findAllBean() {
+  ApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class, DiscountService.class);
+  DiscountService discountService = ac.getBean(DiscountService.class);
+  Member member = new Member(1L, "userA", Grade.VIP);
+  int discountPrice = discountService.discount(member, 10000, "fixDiscountPolicy");
+  assertThat(discountService).isInstanceOf(DiscountService.class);
+  assertThat(discountPrice).isEqualTo(1000);
+ }
+ static class DiscountService {
+  private final Map<String, DiscountPolicy> policyMap;
+  private final List<DiscountPolicy> policies;
+
+  public DiscountService(Map<String, DiscountPolicy> policyMap, List<DiscountPolicy> policies) {
+   this.policyMap = policyMap;
+   this.policies = policies;
+   System.out.println("policyMap = " + policyMap);
+   System.out.println("policies = " + policies);
+  }
+
+  public int discount(Member member, int price, String discountCode) {
+   DiscountPolicy discountPolicy = policyMap.get(discountCode);
+   System.out.println("discountCode = " + discountCode);
+   System.out.println("discountPolicy = " + discountPolicy);
+   return discountPolicy.discount(member, price);
+  }
+ }
+}
+```
+
+**로직 분석**
+
+* `DiscountService`는 Map으로 모든 `DiscountPolicy` 를 주입받는다. 이때 `fixDiscountPolicy`, `rateDiscountPolicy` 가 주입된다.
+* `discount ()` 메서드는 discountCode로 `fixDiscountPolicy`가 넘어오면 Map에서 `fixDiscountPolicy` 스프링 빈을 찾아서 실행한다. 물론 `rateDiscountPolicy`가 넘어오면
+`rateDiscountPolicy` 스프링 빈을 찾아서 실행한다.
+
+**주입 분석**
+
+* `Map<String, DiscountPolicy>` : map의 키에 스프링 빈의 이름을 넣어주고, 그 값으로 `DiscountPolicy` 타입으로 조회한 모든 스프링 빈을 담아준다.
+* `List<DiscountPolicy>` : `DiscountPolicy` 타입으로 조회한 모든 스프링 빈을 담아준다.
+* 만약 해당하는 타입의 스프링 빈이 없으면, 빈 컬렉션이나 Map을 주입한다.
