@@ -16,6 +16,7 @@
 * [singletonContainer](https://github.com/rbgusdlza/TIL/blob/main/Spring/singletonContainer.md)
 * [componentScan](https://github.com/rbgusdlza/TIL/blob/main/Spring/componentScan.md)
 * [dependencyInjection](https://github.com/rbgusdlza/TIL/blob/main/Spring/dependencyInjection.md)
+* [beanLifecyleCallback](https://github.com/rbgusdlza/TIL/blob/main/Spring/beanLifecyleCallback.md)
 
 ## Database
 
